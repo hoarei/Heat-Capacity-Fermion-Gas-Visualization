@@ -1,0 +1,48 @@
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.interpolate import make_interp_spline
+
+#x-axis tau
+#y-axis effeciency max work regime
+#graph effeciency nC
+
+tc1 = 0 #tau at carnot effeciency 1
+nc1 = 1 #effeciency max regime carnot 1
+tc2 = 1 #tau at carnot effeciency 2
+nc2 = 0 #effeciency max regime carnot 1
+d = 0.1
+L = 0.1
+con_rod = 0.15
+crank = L/2
+
+#Carzon-albohrn effeciency line
+x = np.array([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1])
+y = np.array([1,0.68377,0.5527864,0.45227,0.36754,0.2929,0.22540,0.16333,0.10557,0.05131,0])
+xcaycaSpline = make_interp_spline(x,y)
+xca = np.linspace(0,1,100)
+yca = xcaycaSpline(xca)
+
+#for z=-0.59  ----
+    #a = np.array([0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.95,1])  
+
+    #b = np.array([0.7,0.533,0.403,0.290,0.230,0.2,0.174,0.111,0.05,0.028,0.015,1])
+
+
+#abSpline = make_interp_spline(a,b)
+#a1 = np.linspace(0,1,100)
+#b1 = abSpline(a1)
+
+#plot
+car_eff = plt.plot([tc1,tc2],[nc1,nc2], label = '$\eta_{C}$')
+ca_eff = plt.plot(xca, yca)
+#z59 = plt.plot(a1,b1)
+#vertical lines on graph
+plt.axvline(x = 0.92, linestyle = 'dotted', color = 'black' )
+plt.axvline(x = 0.95, linestyle = 'dotted', color = 'black' )
+#points = [plt.plot(*p)[0] for p in ca_eff]
+plt.text(0.025, 1, '$\eta_{C}$')
+plt.text(0.4,0.4,'$\eta_{CA}$')
+plt.xlabel('$τ = T_c / T_h$')
+plt.ylabel('$\eta_{MW}$')
+plt.show()
